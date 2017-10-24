@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 public class Restaurant {
 	static Scanner myScan = new Scanner(System.in);
-	static String[] menu = {"Pizza","Chickens","Coke"};
-	static int[] allPrice = {250,120,45};
+	static String[] menu = {"Pizza","Chickens","Coke"};//RestaurantManager.getMenu();
+	static int[] allPrice = {250,120,45};//RestaurantManager.getPrice();
 	static int[] discountPercent = {0,5,10,25,50};
 	
 	public static int getChoice(){

@@ -1,0 +1,16 @@
+// Welcome to manager mode :)
+// Please list your "menu" ";" "price".
+// 1 menu per line 
+// Don't text "//".
+// Program will not read the word that start with "//". 
+// If menu doesn't have price or name of menu,program will not add that menu into the list.
+// Example : Pizza;250
+//           Banana;20
+//           Coke;20
+// -------------------------------------------------
+Pizza;250
+Somtam;50
+Chicken;150
+Cake;200
+Milk;
+;100
