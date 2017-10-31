@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 public class RestaurantManager {
 
-	static ArrayList<String> menuList = new ArrayList<String>();
-	static ArrayList<Integer> priceList = new ArrayList<Integer>();
+	public static ArrayList<String> menuList = new ArrayList<String>();
+	public static ArrayList<String> priceList = new ArrayList<String>();
+	static String filename = "data/menu.txt";
+	static ClassLoader loader = RestaurantManager.class.getClassLoader();
 
 	public static String menuName(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
@@ -22,7 +24,7 @@ public class RestaurantManager {
 		return null;
 	}
 
-	public static int menuPrice(String menu) {
+	public static String menuPrice(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);
 			if (cha == ';') {
@@ -31,15 +33,14 @@ public class RestaurantManager {
 					break;
 				} else {
 					String price = menu.substring(x + 1, menu.length());
-					int newPrice = Integer.parseInt(price);
-					return newPrice;
+					return price;
 				}
 			}
 		}
-		return 0;
+		return null;
 	}
 
-	public static void check() {
+	public static void checkList() {
 		for (int y = 0; y < menuList.size(); y++) {
 			System.out.print(menuList.get(y) + ", ");
 		}
@@ -49,9 +50,8 @@ public class RestaurantManager {
 		}
 	}
 
-	public static void main(String[] args) {
-		String filename = "data/menu.txt";
-		ClassLoader loader = RestaurantManager.class.getClassLoader();
+	public static void main() {
+		
 		InputStream in = loader.getResourceAsStream(filename);
 
 		if (in == null) {
@@ -69,14 +69,14 @@ public class RestaurantManager {
 				String newMenu = menuName(menu);
 				if (newMenu != null) {
 					menuList.add(newMenu);
-					int price = menuPrice(menu);
-					if (price != 0) {
+					String price = menuPrice(menu);
+					if (price != null) {
 						priceList.add(price);
 					}
 				}
 			}
 		}
 		reader.close();
-//		check();
+//		checkList();
 	}
 }
