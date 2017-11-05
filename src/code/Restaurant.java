@@ -1,6 +1,10 @@
 package code;
 
 import java.util.Random;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -19,6 +23,7 @@ public class Restaurant {
 	static String[] priceStr = new String[RestaurantManager.priceList.size()];
 	static int[] allPrice = new int[priceStr.length];
 	static int[] discountPercent = { 0, 5, 10, 25, 50 };
+	static String outputFile = "Last-Receipt.txt";
 
 	public static int getChoice() {
 		System.out.print("Enter your Choice : ");
@@ -56,7 +61,7 @@ public class Restaurant {
 		System.out.println();
 	}
 	
-	public static void menuChoose(int[] sumQuantity, int[] sumPrice, double total) {
+	public static void printReceipt(int[] sumQuantity, int[] sumPrice, double total) {
 		
 		System.out.println("\n______MENU______ _____Qty_______ _____PRICE_____");
 		if (sumQuantity[0] >= 0) {
@@ -72,6 +77,44 @@ public class Restaurant {
 		System.out.printf("| Total\t\t\t|" + "\t\t%.2f\t|\n", total);
 		System.out.println("________________________________________________");
 		dateTime();
+	}
+	
+	public static void printReceiptToOutput(int[] sumQuantity, int[] sumPrice, double total, OutputStream out,int choice, String comment) {
+		String dateTime = LocalDateTime.now().toString();
+		String date = dateTime.substring(0, 10);
+		PrintStream pout = new PrintStream(out);
+		pout.println(date);
+		pout.println("\n______MENU______ _____Qty_______ _____PRICE_____");
+		if (sumQuantity[0] >= 0) {
+			pout.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[0], sumQuantity[0], sumPrice[0]);
+		}
+		if (sumQuantity[1] >= 0) {
+			pout.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[1], sumQuantity[1], sumPrice[1]);
+		}
+		if (sumQuantity[2] >= 0) {
+			pout.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[2], sumQuantity[2], sumPrice[2]);
+		}
+		pout.println("________________________________________________");
+		pout.printf("| Total\t\t\t|" + "\t\t%.2f\t|\n", total);
+		pout.println("________________________________________________");
+		if(choice == 6) {
+			pout.println("Using-Lucky-Promotion 6");
+		}
+		if(choice == 7) {
+			pout.println("Using-Lucky-Promotion 7");
+		}
+		pout.println("Comments/Suggestion : "+ comment);
+		pout.print("\n===============================================================");
+	}
+	
+	public static void saveReceiptInText(int[] sumQuantity, int[] sumPrice, double total,int choice,String comment) {
+		OutputStream out = null;
+		try {
+			out = new FileOutputStream(outputFile);
+		} catch (FileNotFoundException e) {
+			 System.out.println("Couldn't open output file "+outputFile);
+		}
+		printReceiptToOutput(sumQuantity, sumPrice, total, out, choice, comment);
 	}
 
 	public static void chooseChoices(int choice, int[] sumQuantity, int[] sumPrice, double total) {
@@ -90,17 +133,20 @@ public class Restaurant {
 		}
 		total = getTotal(sumQuantity);
 		int[] sumPrice1 = sumOfUnitPrice(sumPrice, sumQuantity);
+		
 		if (choice == 4) {
-			menuChoose(sumQuantity, sumPrice1, total);
+			printReceipt(sumQuantity, sumPrice1, total);
+			
 		} else if (choice == 6) {
 			System.out.println("...Your Total before play the game...");
-			menuChoose(sumQuantity, sumPrice1, total);
+			printReceipt(sumQuantity, sumPrice1, total);
 			System.out.print("Please enter number 1,2 or 3 : ");
 			int luckNum1 = myScan.nextInt();
 			luckyPro6(luckNum1, choice, sumQuantity, sumPrice1);
+			
 		} else if (choice == 7) {
 			System.out.println("...Your Total before discount...");
-			menuChoose(sumQuantity, sumPrice1, total);
+			printReceipt(sumQuantity, sumPrice1, total);
 			System.out.print("Please input your name : ");
 			String name = myScan.next();
 			luckyPro7(discountPercent, choice, sumQuantity, sumPrice1);
@@ -117,11 +163,11 @@ public class Restaurant {
 				sumPrice[x] = 0;
 			}
 			double total = getTotal(sumQuantity);
-			menuChoose(sumQuantity, sumPrice, total);
+			printReceipt(sumQuantity, sumPrice, total);
 		} else {
 			System.out.println("Sorry...You have to pay x2 for this meal...(ToT)");
 			double total = getTotal(sumQuantity) * 2;
-			menuChoose(sumQuantity, sumPrice, total);
+			printReceipt(sumQuantity, sumPrice, total);
 		}
 	}
 
@@ -131,7 +177,7 @@ public class Restaurant {
 		if (discount != 0) {
 			System.out.print("Congrats!..You get " + discount + "% discount.(^_^)");
 			double total = (getTotal(sumQuantity) * (100 - discount)) / 100;
-			menuChoose(sumQuantity, sumPrice, total);
+			printReceipt(sumQuantity, sumPrice, total);
 
 		} else {
 			System.out.print("Sorry...You get 0% discount.(ToT)");
@@ -140,12 +186,13 @@ public class Restaurant {
 				sumPrice[x] = 0;
 			}
 			double total = getTotal(sumQuantity);
-			menuChoose(sumQuantity, sumPrice, total);
+			printReceipt(sumQuantity, sumPrice, total);
 		}
 	}
-
+	
 	public static void makeOrder() {
-		int choice = 0, quantity = 0;
+		Scanner getComment = new Scanner(System.in);
+		int choice = 0;
 		double total = 0;
 		int[] unitQuantity = new int[menu.length];
 		int[] unitPrice = new int[menu.length];
@@ -157,8 +204,9 @@ public class Restaurant {
 			}
 		} while (choice != 5);
 		System.out.print("Your comments/suggestion : ");
-		String comment = myScan.next();
+		String comment = getComment.nextLine();
 		System.out.println("===== Thank you =====");
+		saveReceiptInText(unitQuantity, unitPrice, total,choice, comment);
 	}
 
 	public static void intro(String[] menu, int[] price) {
@@ -183,11 +231,19 @@ public class Restaurant {
 	}
 	
 	public static void main(String[] args) {
+		Scanner getCha = new Scanner(System.in);
+		String cha = "";
 		RestaurantManager.main();
 		menu = manager.menuList.toArray(menu);
 		priceStr = manager.priceList.toArray(priceStr);
 		allPrice = getInt(priceStr);
+		
+		do {
 		intro(menu, allPrice);
 		makeOrder();
+		System.out.print("\n[N]ew order or [Q]uit : ");
+		cha = getCha.nextLine();
+		System.out.println();
+		}while(cha.equalsIgnoreCase("N"));
 	}
 }
