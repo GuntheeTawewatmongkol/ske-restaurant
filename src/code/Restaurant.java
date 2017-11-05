@@ -1,8 +1,7 @@
 package code;
 
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -47,21 +46,32 @@ public class Restaurant {
 		}
 		return unitPrice;
 	}
-
+	
+	public static void dateTime() {
+		String dateTime = LocalDateTime.now().toString();
+		String date = dateTime.substring(0, 10);
+		String time = dateTime.substring(11,19);
+		System.out.println("Date >> "+ date);
+		System.out.println("Time >> "+ time);
+		System.out.println();
+	}
+	
 	public static void menuChoose(int[] sumQuantity, int[] sumPrice, double total) {
+		
 		System.out.println("\n______MENU______ _____Qty_______ _____PRICE_____");
 		if (sumQuantity[0] >= 0) {
-			System.out.printf("| %s\t\t|       %d\t|" + "       %d  \t|\n", menu[0], sumQuantity[0], sumPrice[0]);
+			System.out.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[0], sumQuantity[0], sumPrice[0]);
 		}
 		if (sumQuantity[1] >= 0) {
-			System.out.printf("| %s\t|       %d\t|" + "       %d  \t|\n", menu[1], sumQuantity[1], sumPrice[1]);
+			System.out.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[1], sumQuantity[1], sumPrice[1]);
 		}
 		if (sumQuantity[2] >= 0) {
-			System.out.printf("| %s\t\t|       %d\t|" + "       %d  \t|\n", menu[2], sumQuantity[2], sumPrice[2]);
+			System.out.printf("| %s     \t|       %d\t|" + "       %d  \t|\n", menu[2], sumQuantity[2], sumPrice[2]);
 		}
 		System.out.println("________________________________________________");
 		System.out.printf("| Total\t\t\t|" + "\t\t%.2f\t|\n", total);
-		System.out.println("________________________________________________\n");
+		System.out.println("________________________________________________");
+		dateTime();
 	}
 
 	public static void chooseChoices(int choice, int[] sumQuantity, int[] sumPrice, double total) {
@@ -153,9 +163,9 @@ public class Restaurant {
 
 	public static void intro(String[] menu, int[] price) {
 		System.out.print("---------Welcome to SKE Restaurant---------\n");
-		System.out.printf("1.) %s\t%d  %s.\n", menu[0], price[0], "Baht");
-		System.out.printf("2.) %s\t%d  %s.\n", menu[1], price[1], "Baht");
-		System.out.printf("3.) %s\t%d   %s.\n", menu[2], price[2], "Baht");
+		System.out.printf("1.) %s\t%d\t%s.\n", menu[0], price[0], "Baht");
+		System.out.printf("2.) %s\t%d\t%s.\n", menu[1], price[1], "Baht");
+		System.out.printf("3.) %s\t%d\t%s.\n", menu[2], price[2], "Baht");
 		System.out.println("4.) Total");
 		System.out.println("5.) Exit\n");
 		System.out.println("--------- ::Lucky Promotion:: ---------");
