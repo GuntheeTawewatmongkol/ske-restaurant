@@ -304,10 +304,15 @@ public class Restaurant {
 		if(editChoice.equalsIgnoreCase("A")) {
 			System.out.print("Menu name : ");
 			String newMenuName = getMenuName.nextLine();
-			newMenu.add(newMenuName);
-			System.out.print("Menu Price : ");
-			String newMenuPrice = myScan.next();
-			newPrice.add(newMenuPrice);
+			if(!newMenu.contains(newMenuName)) {
+				newMenu.add(newMenuName);
+				System.out.print("Menu Price : ");
+				String newMenuPrice = myScan.next();
+				newPrice.add(newMenuPrice);
+			}
+			else if(newMenu.contains(newMenuName)) {
+				System.out.print("You already have this menu!!\n");
+			}
 		}
 		else if(editChoice.equalsIgnoreCase("D")) {
 			for (int x = 0, y = 1;x < menuArray.length;x++, y++) {
