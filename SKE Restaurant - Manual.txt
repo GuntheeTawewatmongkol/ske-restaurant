@@ -27,7 +27,7 @@ Example
 		1.) Pizza          250	Baht.
 		2.) Somtam         50	Baht.
 		3.) Chicken        150	Baht.
-		4.) Cake           200	Baht.
+		4.) Banana Cake    200	Baht.
 	[ T ] - Check your total price
 	[ E ] - Exit (Stop choosing any choice in this bill)
 	--------- ::Lucky Promotion:: ---------
@@ -36,7 +36,16 @@ Example
 	[ L2 ] - Get discount!! >> 0% to 50% <<  
 
 3.) When customer already choose E to stop their order, Program’ll ask you to make new 
-    order, create the new restaurant or quit.
+    order, create the new restaurant, edit the menu ,or quit.
+    
+    If you choose “edit the menu”,the program’ll ask “add menu or delete menu”.
+    Add menu - You have to input the name and price of menu.if it already has that menu
+    it’ll not add the menu again.
+    Delete menu - You just choose the menu number and it’ll delete that menu.
+    After that, the program’ll ask you to make new order, create new restaurant, edit
+    the menu, or quit again.
+
+    **The capital Letter is different to the small Letter.
 
     If you quit the program, it’ll create the output file name AllReceipt.txt in 
     ske - restaurant folder. This is the file that save all of the receipts and comments
