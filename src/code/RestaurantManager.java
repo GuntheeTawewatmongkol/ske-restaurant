@@ -5,13 +5,36 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RestaurantManager {
+	
+	private ArrayList<String> menuList = new ArrayList<String>();
+	private ArrayList<String> priceList = new ArrayList<String>();
+	private ArrayList<Object> allReceipt = new ArrayList<Object>();
 
-	public static ArrayList<String> menuList = new ArrayList<String>();
-	public static ArrayList<String> priceList = new ArrayList<String>();
-	static String filename = "data/menu.txt";
 	static ClassLoader loader = RestaurantManager.class.getClassLoader();
+	static Scanner sc = new Scanner(System.in);
+	
+	public RestaurantManager (String filename,ArrayList<Object> allReceipt) {
+		loadFile(filename);
+		this.allReceipt = allReceipt;
+	}
 
-	public static String menuName(String menu) {
+	public ArrayList<Object> getAllReceipt() {
+		return allReceipt;
+	}
+
+	public void setAllReceipt(ArrayList<Object> allReceipt) {
+		this.allReceipt = allReceipt;
+	}
+
+	public ArrayList<String> getMenuList() {
+		return menuList;
+	}
+
+	public ArrayList<String> getPriceList() {
+		return priceList;
+	}
+	
+	public String menuName(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);
 			if (menu.charAt(0) == ';') {
@@ -24,7 +47,7 @@ public class RestaurantManager {
 		return null;
 	}
 
-	public static String menuPrice(String menu) {
+	public String menuPrice(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);
 			if (cha == ';') {
@@ -39,19 +62,20 @@ public class RestaurantManager {
 		}
 		return null;
 	}
-
-	public static void checkList() {
-		for (int y = 0; y < menuList.size(); y++) {
-			System.out.print(menuList.get(y) + ", ");
-		}
-		System.out.println();
-		for (int y = 0; y < priceList.size(); y++) {
-			System.out.print(priceList.get(y) + ", ");
+	
+	public void addMenuAndPrice(String line) {
+		String menu = line.trim();
+		String newMenu = menuName(menu);
+		if (newMenu != null) {
+			this.menuList.add(newMenu);
+			String price = menuPrice(menu);
+			if (price != null) {
+				this.priceList.add(price);
+			}
 		}
 	}
-
-	public static void main() {
-		
+	
+	public void loadFile(String filename) {
 		InputStream in = loader.getResourceAsStream(filename);
 
 		if (in == null) {
@@ -59,24 +83,14 @@ public class RestaurantManager {
 			return;
 		}
 		Scanner reader = new Scanner(in);
-
 		while (reader.hasNextLine()) {
 			String line = reader.nextLine();
 			if (line.startsWith("//")) {
 				continue;
 			} else {
-				String menu = line.trim();
-				String newMenu = menuName(menu);
-				if (newMenu != null) {
-					menuList.add(newMenu);
-					String price = menuPrice(menu);
-					if (price != null) {
-						priceList.add(price);
-					}
-				}
+				addMenuAndPrice(line);
 			}
 		}
 		reader.close();
-//		checkList();
 	}
 }
