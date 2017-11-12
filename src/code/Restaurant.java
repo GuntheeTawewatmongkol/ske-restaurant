@@ -26,7 +26,7 @@ public class Restaurant {
 	
 	static int[] discountPercent = { 0, 5, 10, 25, 50 };
 	
-	static String outputFile = "AllReceipt.txt";
+	static String outputFile = "src/data/AllReceipt.txt";
 	static Scanner myScan = new Scanner(System.in);
 	
 	public static double[] getDouble(String[] price){
