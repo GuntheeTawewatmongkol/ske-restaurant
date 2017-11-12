@@ -284,7 +284,7 @@ public class Restaurant {
 	public static void checkInput(String choiceManager) {
 		while (menuArray.length == 0) {
 			System.out.println("This file doesn't have any menu please press [N] to create your restaurant again!!");
-			System.out.print("[N]ew restaurant or [E]xit: ");
+			System.out.print("[N]ew restaurant or [E]xit : ");
 			choiceManager = myScan.nextLine();
 			System.out.println();
 			if (choiceManager.equalsIgnoreCase("N")) {
@@ -294,29 +294,68 @@ public class Restaurant {
 		}
 	}
 	
+	public static void editMenu() {
+		Scanner getMenuName = new Scanner(System.in);
+		ArrayList<String> newMenu = restaurant.getMenuList();
+		ArrayList<String> newPrice = restaurant.getPriceList();
+		
+		System.out.print("[A]dd menu or [D]elete menu : ");
+		String editChoice = myScan.next();
+		if(editChoice.equalsIgnoreCase("A")) {
+			System.out.print("Menu name : ");
+			String newMenuName = getMenuName.nextLine();
+			newMenu.add(newMenuName);
+			System.out.print("Menu Price : ");
+			String newMenuPrice = myScan.next();
+			newPrice.add(newMenuPrice);
+		}
+		else if(editChoice.equalsIgnoreCase("D")) {
+			for (int x = 0, y = 1;x < menuArray.length;x++, y++) {
+				System.out.printf("\t%d.) %-15s%.0f\t%s.\n",y,menuArray[x],priceDb[x],current);
+			}
+			System.out.print("Choose the number of menu to delete menu : ");
+			int menuChoice = myScan.nextInt();
+			newMenu.remove(menuChoice-1);
+			newPrice.remove(menuChoice-1);
+		}
+		restaurant.setMenuList(newMenu);
+		menuArray = new String[restaurant.getMenuList().size()];
+		menuArray = restaurant.getMenuList().toArray(menuArray);
+		
+		restaurant.setPriceList(newPrice);
+		priceStr = new String[restaurant.getPriceList().size()];
+		priceDb = getDouble(restaurant.getPriceList().toArray(priceStr));
+	}
+	
 	public static void main(String[] args) {
 		Scanner getCha = new Scanner(System.in);
 		String cha = "";
 		String choiceManager = "";
 		do {
 			makeNewRestaurant();
-			
 			if (menuArray.length == 0) {
 				checkInput(choiceManager);
 			}
 			if (choiceManager.equalsIgnoreCase("E")) break;
-			
+
 			String restName = askRestaurantName();
 			System.out.print("Please input current: ");
 			current = myScan.next();
+			
 			do {
 				introMenu(restName);
 				makeOrder(restName);
-				System.out.print("\n[M]ake new order [N]ew restaurant or [Q]uit : ");
-				cha = getCha.nextLine();
-				System.out.println();
+				do {
+					System.out.print("\n[M]ake new order [N]ew restaurant [E]dit menu or [Q]uit : ");
+					cha = getCha.nextLine();
+					System.out.println();
+					if(cha.equalsIgnoreCase("E")) {
+						editMenu();
+					}
+				}while(cha.equalsIgnoreCase("E"));
 			} while (cha.equalsIgnoreCase("M"));
 		} while (cha.equalsIgnoreCase("N"));
+		
 		if (cha.equalsIgnoreCase("Q")) {
 			saveAllReceiptInText();
 		}

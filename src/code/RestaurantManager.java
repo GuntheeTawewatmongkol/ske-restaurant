@@ -30,8 +30,16 @@ public class RestaurantManager {
 		return menuList;
 	}
 
+	public void setMenuList(ArrayList<String> menuList) {
+		this.menuList = menuList;
+	}
+
 	public ArrayList<String> getPriceList() {
 		return priceList;
+	}
+	
+	public void setPriceList(ArrayList<String> priceList) {
+		this.priceList = priceList;
 	}
 	
 	public String menuName(String menu) {
