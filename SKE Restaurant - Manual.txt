@@ -74,7 +74,9 @@ Example
 	Mode : Lucky Promotion 1
 
 	______MENU______ _____Qty_______ _____PRICE_____
+	| Pizza     	|       0	|       0.0  	|
 	| Somtam     	|       2	|       100.0  	|
+	| Chicken     	|       0	|       0.0  	|
 	| Cake     	|       3	|       600.0  	|
 	________________________________________________
 	| Total			|		1400.0	|
@@ -88,6 +90,9 @@ Example
 	Mode : Lucky Promotion 2
 
 	______MENU______ _____Qty_______ _____PRICE_____
+	| Pizza     	|       0	|       0.0  	|
+	| Somtam     	|       0	|       0.0  	|
+	| Chicken     	|       0	|       0.0  	|
 	| Cake     	|       3	|       600.0  	|
 	________________________________________________
 	| Total			|		450.0	|
