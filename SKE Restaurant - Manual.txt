@@ -47,9 +47,9 @@ Example
 
     **The capital Letter is different to the small Letter.
 
-    If you quit the program, it’ll create the output file name AllReceipt.txt in 
-    ske - restaurant folder. This is the file that save all of the receipts and comments
-    In your restaurant.
+    If you quit the program, it’ll create the output file "AllReceipt.txt" in 
+    ske - restaurant/src/data folder. This is the file that save all of the receipts and comments
+    of your restaurant.
     It shows 1.the name of restaurant 2.mode in that receipt(normal, lucky promotion1/2)
     3.receipt 4.date and time 5.comment from customer.
 
