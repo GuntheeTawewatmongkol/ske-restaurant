@@ -138,7 +138,7 @@ public class Restaurant {
 	public static void printReceipt() {
 		for(int x = 0;x < receipt.length;x++) {
 			if((x >= 1)&&(x <= menuArray.length)) {
-				if (sumQuantity[x-1] > 0) {
+				if (sumQuantity[x-1] != 0) {
 					System.out.print(receipt[x]);
 				}
 			}
@@ -272,14 +272,7 @@ public class Restaurant {
 			pout.println(myRestName + " Restaurant");
 			pout.println("Mode : " + myMode);
 			for(int y = 0;y < myReceipt.length;y++) {
-				if((y >= 1)&&(y <= menuArray.length)) {
-					if(sumQuantity[y-1] > 0) {
-						pout.print(myReceipt[y]);
-					}
-				}
-				else {
-					pout.print(myReceipt[y]);
-				}
+				pout.print(myReceipt[y]);
 			}
 			pout.println("Comment/Suggestion : " + myComment);
 			pout.println("=======================================================");
