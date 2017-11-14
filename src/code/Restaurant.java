@@ -15,13 +15,9 @@ public class Restaurant {
 	public static String[] menuArray;
 	public static String[] priceStr;
 	public static double[] priceDb;
-	public static double total;
 	public static String current;
 
-	public static double[] sumPrice;
-	public static int[] sumQuantity;
 	public static String[] receipt;
-
 	public static ArrayList<Object> allReceipt;
 
 	static int[] discountPercent = { 0, 5, 10, 25, 50 };
@@ -80,7 +76,7 @@ public class Restaurant {
 		return quantity;
 	}
 
-	public static double getTotal() {
+	public static double getTotal(int[] sumQuantity) {
 		double total = 0.0;
 		for (int x = 0; x < sumQuantity.length; x++) {
 			total += sumQuantity[x] * priceDb[x];
@@ -88,7 +84,7 @@ public class Restaurant {
 		return total;
 	}
 
-	public static void chooseMenu() {
+	public static void chooseMenu(double total,double[] sumPrice,int[] sumQuantity) {
 		int quantity = 0;
 		int choice = getMenuChoice();
 		if ((choice >= 1) && (choice <= menuArray.length)) {
@@ -96,7 +92,7 @@ public class Restaurant {
 			System.out.println();
 			sumQuantity[choice - 1] += quantity;
 			sumPrice[choice - 1] += priceDb[choice - 1] * quantity;
-			total = getTotal();
+			total = getTotal(sumQuantity);
 		}
 	}
 
@@ -122,24 +118,30 @@ public class Restaurant {
 		return (double) tmp / factor;
 	}
 
-	public static void getReceipt() {
+	public static void makeReceiptForm(double total,double[] sumPrice,int[] sumQuantity) {
 		int y = 1;
-		receipt[0] = "\n______MENU______ _____Qty_______ _____PRICE_____\n";
+		String space = "|\t";
+		receipt[0] = "\n__________MENU__________ _____Qty_______ _____PRICE_____\n";
 		for (int x = 0; x < sumPrice.length; x++) {
 			sumPrice[x] = round(sumPrice[x], 2);
-			receipt[x + 1] = "| " + menuArray[x] + "     \t|       " + sumQuantity[x] + "\t|" + "       " + sumPrice[x]
-					+ "  \t|\n";
+			
+			if(menuArray[x].length() <= 6) space = "\t\t\t|\t";
+			else if(menuArray[x].length() <= 12) space = "\t\t|\t";
+			else if(menuArray[x].length() <= 21) space = "\t|\t";
+			
+			receipt[x + 1] = "| " + menuArray[x] + space + sumQuantity[x] + "\t|" + "\t" + sumPrice[x]
+					+ "\t|\n";
 			y++;
 		}
 		total = round(total, 2);
-		receipt[y] = "________________________________________________\n";
-		receipt[y + 1] = "| Total\t\t\t|" + "\t\t" + total + "\t|\n";
-		receipt[y + 2] = "________________________________________________\n";
+		receipt[y] = "________________________________________________________\n";
+		receipt[y + 1] = "| Total\t\t\t|" + "\t\t\t" + total + "\t|\n";
+		receipt[y + 2] = "________________________________________________________\n";
 		receipt[y + 3] = "Date >> " + date() + "\nTime >> " + time() + "\n\n";
 
 	}
 
-	public static void printReceipt() {
+	public static void printReceipt(int[] sumQuantity) {
 		for (int x = 0; x < receipt.length; x++) {
 			if ((x >= 1) && (x <= menuArray.length)) {
 				if (sumQuantity[x - 1] != 0) {
@@ -151,7 +153,7 @@ public class Restaurant {
 		}
 	}
 
-	public static void luckyPro1() {
+	public static void luckyPro1(double total,double[] sumPrice,int[] sumQuantity) {
 		System.out.print("Please enter number 1,2 or 3 : ");
 		int num = myScan.nextInt();
 		Random rand = new Random();
@@ -162,52 +164,52 @@ public class Restaurant {
 				sumQuantity[x] = 0;
 				sumPrice[x] = 0;
 			}
-			total = getTotal();
-			getReceipt();
-			printReceipt();
+			total = getTotal(sumQuantity);
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 		} else {
 			System.out.println("Sorry...You have to pay x2 for this meal...(ToT)");
-			total = getTotal() * 2;
-			getReceipt();
-			printReceipt();
+			total = getTotal(sumQuantity) * 2;
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 		}
 	}
 
-	public static void luckyPro2() {
+	public static void luckyPro2(double total,double[] sumPrice,int[] sumQuantity) {
 		System.out.print("Please input your name : ");
 		String name = myScan.next();
 		int randomDiscount = new Random().nextInt(discountPercent.length);
 		int discount = discountPercent[randomDiscount];
 		if (discount != 0) {
 			System.out.print("Congrats!..You get " + discount + "% discount.(^_^)");
-			total = (getTotal() * (100 - discount)) / 100;
-			getReceipt();
-			printReceipt();
+			total = (getTotal(sumQuantity) * (100 - discount)) / 100;
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 
 		} else {
 			System.out.print("Sorry...You get 0% discount.(ToT)");
-			getReceipt();
-			printReceipt();
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 		}
 	}
 
-	public static void chooseChoice(String choice) {
+	public static void chooseChoice(String choice,double total,double[] sumPrice,int[] sumQuantity) {
 		if (choice.equalsIgnoreCase("O")) {
-			chooseMenu();
+			chooseMenu(total,sumPrice,sumQuantity);
 		} else if (choice.equalsIgnoreCase("T")) {
-			getReceipt();
-			printReceipt();
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 		} else if (choice.equalsIgnoreCase("E")) {
-			getReceipt();
-			printReceipt();
+			makeReceiptForm(total,sumPrice,sumQuantity);
+			printReceipt(sumQuantity);
 		} else if (choice.equalsIgnoreCase("L1")) {
-			luckyPro1();
+			luckyPro1(total,sumPrice,sumQuantity);
 		} else if (choice.equalsIgnoreCase("L2")) {
-			luckyPro2();
+			luckyPro2(total,sumPrice,sumQuantity);
 		}
 	}
 
-	public static void makeOrder(String restName) {
+	public static void makeOrder(String restName,double total,double[] sumPrice,int[] sumQuantity) {
 		Scanner getComment = new Scanner(System.in);
 		String choice = "";
 		String mode = "normal mode";
@@ -218,7 +220,8 @@ public class Restaurant {
 
 		do {
 			choice = getChoice();
-			chooseChoice(choice);
+			chooseChoice(choice,total,sumPrice,sumQuantity);
+			total = getTotal(sumQuantity);
 			if ((choice.equalsIgnoreCase("L1")) || (choice.equalsIgnoreCase("L2"))) {
 				break;
 			}
@@ -241,7 +244,7 @@ public class Restaurant {
 		System.out.printf("\n---------Welcome to %s Restaurant---------\n", restName);
 		System.out.println("[ O ] - Order food");
 		for (int x = 0, y = 1; x < menuArray.length; x++, y++) {
-			System.out.printf("\t%d.) %-15s%.0f\t%s.\n", y, menuArray[x], priceDb[x], current);
+			System.out.printf("\t%d.) %-25s%.0f\t%3s.\n", y, menuArray[x], priceDb[x], current);
 		}
 		System.out.print("[ T ] - Check your total price\n[ E ] - Exit (Stop choosing any choice in this bill)\n");
 		System.out.println("--------- ::Lucky Promotion:: ---------");
@@ -313,7 +316,7 @@ public class Restaurant {
 			}
 		} else if (editChoice.equalsIgnoreCase("D")) {
 			for (int x = 0, y = 1; x < menuArray.length; x++, y++) {
-				System.out.printf("\t%d.) %-15s%.0f\t%s.\n", y, menuArray[x], priceDb[x], current);
+				System.out.printf("\t%d.) %-25s%.0f\t%3s.\n", y, menuArray[x], priceDb[x], current);
 			}
 			System.out.print("Choose the number of menu to delete menu : ");
 			int menuChoice = myScan.nextInt();
@@ -331,8 +334,10 @@ public class Restaurant {
 
 	public static void main(String[] args) {
 		Scanner getCha = new Scanner(System.in);
-		String cha = "";
-		String choiceManager = "";
+		String cha = "" , choiceManager = "";
+		double total = 0.0;
+		int[] sumQuantity = null;
+		double[] sumPrice = null;
 		allReceipt = new ArrayList<Object>();
 		do {
 			makeNewRestaurant();
@@ -348,7 +353,7 @@ public class Restaurant {
 
 			do {
 				introMenu(restName);
-				makeOrder(restName);
+				makeOrder(restName,total,sumPrice,sumQuantity);
 				do {
 					System.out.print("\n[M]ake new order [N]ew restaurant [E]dit menu or [Q]uit : ");
 					cha = getCha.nextLine();
