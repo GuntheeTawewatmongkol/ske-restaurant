@@ -8,22 +8,12 @@ public class RestaurantManager {
 	
 	private ArrayList<String> menuList = new ArrayList<String>();
 	private ArrayList<String> priceList = new ArrayList<String>();
-	private ArrayList<Object> allReceipt = new ArrayList<Object>();
 
 	static ClassLoader loader = RestaurantManager.class.getClassLoader();
 	static Scanner sc = new Scanner(System.in);
 	
-	public RestaurantManager (String filename,ArrayList<Object> allReceipt) {
+	public RestaurantManager (String filename) {
 		loadFile(filename);
-		this.allReceipt = allReceipt;
-	}
-
-	public ArrayList<Object> getAllReceipt() {
-		return allReceipt;
-	}
-
-	public void setAllReceipt(ArrayList<Object> allReceipt) {
-		this.allReceipt = allReceipt;
 	}
 
 	public ArrayList<String> getMenuList() {

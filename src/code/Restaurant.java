@@ -22,7 +22,7 @@ public class Restaurant {
 	public static int[] sumQuantity;
 	public static String[] receipt;
 	
-	public static ArrayList<Object> allReceipt = new ArrayList<Object>();
+	public static ArrayList<Object> allReceipt;
 	
 	static int[] discountPercent = { 0, 5, 10, 25, 50 };
 	
@@ -38,20 +38,22 @@ public class Restaurant {
 	}
 	
 	public static String askRestaurantName() {
+		Scanner getRestName = new Scanner(System.in);
 		System.out.print("What is the name of your restaurant?? ");
-		return myScan.nextLine();
+		return getRestName.nextLine();
 	}
 	
 	public static String askMenuFile() {
+		Scanner getFileName = new Scanner(System.in);
 		System.out.println("This is your NEW RESTAURANT!!");
 		System.out.print("Please input name of your menufile : ");
-		String fileName = myScan.nextLine();
+		String fileName = getFileName.nextLine();
 		return String.format("data/%s.txt", fileName);
 	}
 	
 	public static void makeNewRestaurant() {
 		String fileLocation = askMenuFile();
-		restaurant = new RestaurantManager(fileLocation,allReceipt);
+		restaurant = new RestaurantManager(fileLocation);
 		
 		menuArray = new String[restaurant.getMenuList().size()];
 		menuArray = restaurant.getMenuList().toArray(menuArray);
@@ -61,9 +63,9 @@ public class Restaurant {
 	}
 	
 	public static String getChoice() {
+		Scanner getChoice = new Scanner(System.in);
 		System.out.print("Enter your Choice : ");
-		String choice = myScan.next();
-		return choice;
+		return getChoice.nextLine();
 	}
 	
 	public static int getMenuChoice() {
@@ -232,7 +234,6 @@ public class Restaurant {
 		String comment = getComment.nextLine();
 		RestaurantReceipt myReceipt = new RestaurantReceipt(restName, receipt, comment, mode);
 		allReceipt.add(myReceipt);
-		restaurant.setAllReceipt(allReceipt);
 		System.out.println("===== Thank you =====");
 		
 	}
@@ -262,8 +263,8 @@ public class Restaurant {
 	
 	public static void printAllReceipt(OutputStream out) {
 		PrintStream pout = new PrintStream(out);
-		for(int x = 0;x < restaurant.getAllReceipt().size();x++) {
-			Object myReceiptOb = restaurant.getAllReceipt().get(x);
+		for(int x = 0;x < allReceipt.size();x++) {
+			Object myReceiptOb = allReceipt.get(x);
 			String myRestName = ((RestaurantReceipt) myReceiptOb).getRestaurantName();
 			String myMode = ((RestaurantReceipt) myReceiptOb).getMode();
 			String[] myReceipt = ((RestaurantReceipt) myReceiptOb).getReciept();
@@ -280,10 +281,11 @@ public class Restaurant {
 	}
 	
 	public static void checkInput(String choiceManager) {
+		Scanner getChoiceMan = new Scanner(System.in);
 		while (menuArray.length == 0) {
 			System.out.println("This file doesn't have any menu please press [N] to create your restaurant again!!");
 			System.out.print("[N]ew restaurant or [E]xit : ");
-			choiceManager = myScan.nextLine();
+			choiceManager = getChoiceMan.nextLine();
 			System.out.println();
 			if (choiceManager.equalsIgnoreCase("N")) {
 				makeNewRestaurant();
@@ -334,6 +336,7 @@ public class Restaurant {
 		Scanner getCha = new Scanner(System.in);
 		String cha = "";
 		String choiceManager = "";
+		allReceipt = new ArrayList<Object>();
 		do {
 			makeNewRestaurant();
 			if (menuArray.length == 0) {
@@ -355,13 +358,15 @@ public class Restaurant {
 					if(cha.equalsIgnoreCase("E")) {
 						editMenu();
 					}
+					else if (cha.equalsIgnoreCase("Q")) {
+						saveAllReceiptInText();
+						break;
+					}
 				}while(cha.equalsIgnoreCase("E"));
 			} while (cha.equalsIgnoreCase("M"));
 		} while (cha.equalsIgnoreCase("N"));
 		
-		if (cha.equalsIgnoreCase("Q")) {
-			saveAllReceiptInText();
-		}
+		
 	}
 
 }
