@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RestaurantManager {
-	
+
 	private ArrayList<String> menuList = new ArrayList<String>();
 	private ArrayList<String> priceList = new ArrayList<String>();
 
 	static ClassLoader loader = RestaurantManager.class.getClassLoader();
 	static Scanner sc = new Scanner(System.in);
-	
-	public RestaurantManager (String filename) {
+
+	public RestaurantManager(String filename) {
 		loadFile(filename);
 	}
 
@@ -27,11 +27,11 @@ public class RestaurantManager {
 	public ArrayList<String> getPriceList() {
 		return priceList;
 	}
-	
+
 	public void setPriceList(ArrayList<String> priceList) {
 		this.priceList = priceList;
 	}
-	
+
 	public String menuName(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);
@@ -60,7 +60,7 @@ public class RestaurantManager {
 		}
 		return null;
 	}
-	
+
 	public void addMenuAndPrice(String line) {
 		String menu = line.trim();
 		String newMenu = menuName(menu);
@@ -72,7 +72,7 @@ public class RestaurantManager {
 			}
 		}
 	}
-	
+
 	public void loadFile(String filename) {
 		InputStream in = loader.getResourceAsStream(filename);
 

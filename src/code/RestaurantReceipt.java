@@ -5,8 +5,8 @@ public class RestaurantReceipt {
 	private String comment;
 	private String restaurantName;
 	private String mode;
-	
-	public RestaurantReceipt(String restaurantName,String[] receipt,String comment,String mode) {
+
+	public RestaurantReceipt(String restaurantName, String[] receipt, String comment, String mode) {
 		this.restaurantName = restaurantName;
 		this.receipt = receipt;
 		this.comment = comment;
