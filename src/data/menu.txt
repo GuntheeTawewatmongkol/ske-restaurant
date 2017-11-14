@@ -11,6 +11,7 @@
 Pizza;250
 Somtam;50
 Chicken;150
-Banana Cake;200
+Cake;200
+Ice tea;38
 Milk;
 ;100
