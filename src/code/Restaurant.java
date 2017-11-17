@@ -118,7 +118,7 @@ public class Restaurant {
 		return (double) tmp / factor;
 	}
 
-	public static void makeReceiptForm(double total,double[] sumPrice,int[] sumQuantity) {
+	public static void recordOrder(double total,double[] sumPrice,int[] sumQuantity) {
 		int y = 1;
 		String space = "|\t";
 		receipt[0] = "\n__________MENU__________ _____Qty_______ _____PRICE_____\n";
@@ -165,12 +165,12 @@ public class Restaurant {
 				sumPrice[x] = 0;
 			}
 			total = getTotal(sumQuantity);
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 		} else {
 			System.out.println("Sorry...You have to pay x2 for this meal...(ToT)");
 			total = getTotal(sumQuantity) * 2;
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 		}
 	}
@@ -183,12 +183,12 @@ public class Restaurant {
 		if (discount != 0) {
 			System.out.print("Congrats!..You get " + discount + "% discount.(^_^)");
 			total = (getTotal(sumQuantity) * (100 - discount)) / 100;
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 
 		} else {
 			System.out.print("Sorry...You get 0% discount.(ToT)");
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 		}
 	}
@@ -197,10 +197,10 @@ public class Restaurant {
 		if (choice.equalsIgnoreCase("O")) {
 			chooseMenu(total,sumPrice,sumQuantity);
 		} else if (choice.equalsIgnoreCase("T")) {
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 		} else if (choice.equalsIgnoreCase("E")) {
-			makeReceiptForm(total,sumPrice,sumQuantity);
+			recordOrder(total,sumPrice,sumQuantity);
 			printReceipt(sumQuantity);
 		} else if (choice.equalsIgnoreCase("L1")) {
 			luckyPro1(total,sumPrice,sumQuantity);
