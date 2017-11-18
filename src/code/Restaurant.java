@@ -9,11 +9,20 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Providing user interface of SKE restaurant application.The user can use the Restaurant by using the command. 
+ * User can be both Manager and Customer.
+ * For the Manager,He can manage what to do with the menu,create new restaurant,and make new order.
+ * For the Customer,He can choose order from the menu. 
+ * 
+ * @author Gunthee Tawewatmongkol
+ */
+
 public class Restaurant {
 	public static RestaurantManager restaurant;
 
 	public static String[] menuArray;
-	public static String[] priceStr;
+	public static String[] priceStr; 
 	public static double[] priceDb;
 	public static String current;
 
@@ -24,7 +33,10 @@ public class Restaurant {
 
 	static String outputFile = "src/data/AllReceipt.txt";
 	static Scanner myScan = new Scanner(System.in);
-
+	
+/** Change price that receive from the restaurant manger which is String to double. 
+ * 
+ */
 	public static double[] getDouble(String[] price) {
 		double[] newPrice = new double[price.length];
 		for (int x = 0; x < price.length; x++) {
@@ -108,6 +120,11 @@ public class Restaurant {
 		return time;
 	}
 
+/**	Change double to String that has decimal points.
+ * @param value 
+ * @param places
+ * @return
+ */
 	public static double round(double value, int places) {
 		if (places < 0)
 			throw new IllegalArgumentException();
@@ -153,6 +170,14 @@ public class Restaurant {
 		}
 	}
 
+/** This is the special promotion that contains function.
+ *  Customers have to guess the number 1,2 or 3.
+ *  If the number match with the random number,they will get free meal.
+ *  If it doesn't match with the random number,they will have to pay double price.
+ * @param total
+ * @param sumPrice
+ * @param sumQuantity
+ */
 	public static void luckyPro1(double total,double[] sumPrice,int[] sumQuantity) {
 		System.out.print("Please enter number 1,2 or 3 : ");
 		int num = myScan.nextInt();
@@ -174,7 +199,14 @@ public class Restaurant {
 			printReceipt(sumQuantity);
 		}
 	}
-
+	
+/** This is the special promotion that contains function.
+ * 	It is the lucky promotion 2.You just input your name and wait for the result.
+ *  You’ll get 0 to 50% discount.
+ * @param total
+ * @param sumPrice
+ * @param sumQuantity
+ */
 	public static void luckyPro2(double total,double[] sumPrice,int[] sumQuantity) {
 		System.out.print("Please input your name : ");
 		String name = myScan.next();

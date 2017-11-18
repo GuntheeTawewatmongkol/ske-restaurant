@@ -4,6 +4,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The RestaurantManager load new menu file from the menu text file.
+ * 
+ * @author  Gunthee Tawewatmongkol
+ *
+ */
 public class RestaurantManager {
 
 	private ArrayList<String> menuList = new ArrayList<String>();
@@ -32,6 +38,11 @@ public class RestaurantManager {
 		this.priceList = priceList;
 	}
 
+/** Get menu name from input stream source.
+ * Check whether if input stream source has menu name.
+ * @param menu
+ * @return 
+ */
 	public String menuName(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);
@@ -45,6 +56,11 @@ public class RestaurantManager {
 		return null;
 	}
 
+/** Get some price from input stream source.
+ * Check whether if input stream source has some price.
+ * @param menu
+ * @return 
+ */
 	public String menuPrice(String menu) {
 		for (int x = 0; x < menu.length(); x++) {
 			char cha = menu.charAt(x);

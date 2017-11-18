@@ -1,5 +1,11 @@
 package code;
 
+/**
+ * This is an object class that receives order,comment, and mode in each restaurant.
+ * 
+ * @author Gunthee tawewatmongkol
+ */
+
 public class RestaurantReceipt {
 	private String[] receipt;
 	private String comment;
