@@ -3,10 +3,10 @@ This is repository for the ske-restaurant project.
 @author Gunthee Tawewatmongkol
 
 
-##-SKE RESTAURANT PROGRAM MANUAL-
+## -SKE RESTAURANT PROGRAM MANUAL-
 
 
-###For Restaurant Manager
+### For Restaurant Manager
 
 1.) You have to add your menu in data folder by create .txt file.
     In data folder has the example menu.txt and way to add your menu.
@@ -26,6 +26,7 @@ This is repository for the ske-restaurant project.
     That you can choose.
 
 Example
+
     	---------Welcome to Jenny Restaurant---------
 	[ O ] - Order food
 		1.) Pizza          250	Baht.
@@ -58,6 +59,7 @@ Example
     3.receipt 4.date and time 5.comment from customer.
 
 Example
+
 	Jenny Restaurant
 	Mode : normal mode
 
@@ -109,7 +111,7 @@ Example
 
 
 
-###For Customer
+### For Customer
 
 1.) You have to choose the function that you want to choose.
     The program’ll ask you “Enter your Choice : ”
